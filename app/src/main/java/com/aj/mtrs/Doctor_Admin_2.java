@@ -1,20 +1,13 @@
 package com.aj.mtrs;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -30,64 +23,38 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class Admin_doctor extends AppCompatActivity {
-    ListView sub_list;
+public class Doctor_Admin_2 extends AppCompatActivity {
 
-
-    int show = 0;
-    int textlength = 0;
-
-    public static String myJSON, send_ditails;
-    private static final String TAG_RESULTS = "result";
+    public static String myJSON;
+    private static final String TAG_RESULTS="result";
     JSONArray peoples = null;
-    public static int cnt, cnt1;
-
-    private ProgressDialog progress;
-    final Context context = this;
-    EditText inputSearch;
+    public  static  int cnt,cnt1,flag=0;
+    public String receivedValue;
+    ListView sub_list;
     public static String nfc_id[],D_name[],mobileno[],email[],D_addr[],bloodgrp[],gender[],dob[],photoid[],d_id[],p_id[];
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_doctor__admin_2);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_admin_doctor);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-
-            try {
-
-                Toast.makeText(context, "hii", Toast.LENGTH_SHORT).show();
-
-                getData();
-                Toast.makeText(context, "2", Toast.LENGTH_SHORT).show();
-                sub_list=(ListView)findViewById(R.id.sub_list);
-                sub_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-
-                        TextView textView = (TextView) v.findViewById(R.id.name);
-                        send_ditails = textView.getText().toString();
-
-
-                        Intent s = new Intent(getApplicationContext(), ad_Dr_ditails.class);
-                        startActivity(s);
-                    }
-                });
-
-
-
-
-            }catch (Exception s){
-                Toast.makeText(context, "ad_dr list  ::"+s, Toast.LENGTH_LONG).show();
+        getDataa();
+        sub_list=(ListView)findViewById(R.id.sub_list);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
-        }
+        });
+    }
 
-    //#######################################################################################3 grt data $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-    public void getData(){
+
+
+    public void getDataa(){
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
             @Override
@@ -115,10 +82,8 @@ public class Admin_doctor extends AppCompatActivity {
                         sb.append(line + "\n");
                     }
                     result = sb.toString();
-                    Toast.makeText(context, "dd", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     // Oops
-
                 }
                 finally {
                     try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
@@ -128,32 +93,33 @@ public class Admin_doctor extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(String result){
-                try {
-
-                    myJSON=result;
-                    showList();
-
-                }catch (Exception f){
-
-                      Toast.makeText(getApplicationContext(), "error recive f on poast", Toast.LENGTH_SHORT).show();
-                }
+                myJSON=result;
+                showLista();
+                Toast.makeText(Doctor_Admin_2.this, "1", Toast.LENGTH_SHORT).show();
 
             }
         }
         GetDataJSON g = new GetDataJSON();
         g.execute();
     }
-    protected void showList(){
+    protected void showLista(){
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
             peoples = jsonObj.getJSONArray(TAG_RESULTS);
             cnt=0;
             cnt1=0;
 
-
+            Toast.makeText(Doctor_Admin_2.this, "2 ", Toast.LENGTH_SHORT).show();
             for(int i=0;i<peoples.length();i++){
+                //     JSONObject c = peoples.getJSONObject(i);
+
+
+
                 cnt++;
             }
+
+            //sssssssssssssssssssssss
+
             nfc_id = new String[cnt];
             D_name = new String[cnt];
             mobileno  = new String[cnt];
@@ -164,16 +130,13 @@ public class Admin_doctor extends AppCompatActivity {
             dob = new String[cnt];
             photoid = new String[cnt];
             d_id = new String[cnt];
-            p_id = new String[cnt];
-
-
-
 
 
             for(int i=0;i<peoples.length();i++){
                 JSONObject c = peoples.getJSONObject(i);
 
 
+                Toast.makeText(this, "vf"+peoples.length(), Toast.LENGTH_SHORT).show();
 
                 nfc_id[cnt1]=c.getString("nfc_id");
                 D_name[cnt1]=c.getString("D_name");
@@ -184,20 +147,18 @@ public class Admin_doctor extends AppCompatActivity {
                 gender[cnt1]=c.getString("gender");
                 dob[cnt1]=c.getString("dob");
                 photoid[cnt1]=c.getString("photoid");
+                d_id[cnt1]=c.getString("d_id");
 
-
+                Toast.makeText(this, "nfc_id "+nfc_id[cnt1], Toast.LENGTH_SHORT).show();
                 cnt1++;
             }
-
-
-              Toast.makeText(this, ""+peoples.length(), Toast.LENGTH_SHORT).show();
-           Lay_ad_Dr a = new Lay_ad_Dr(this,D_name,mobileno,email,D_addr,bloodgrp,gender,dob,photoid,d_id,p_id);
-            sub_list.setAdapter(a);
+            Toast.makeText(this, "v"+peoples.length(), Toast.LENGTH_SHORT).show();
+          //  Lay_ad_Dr a=new Lay_ad_Dr(this,D_name);
+          //  sub_list.setAdapter(a);
 
             if(cnt==0)
             {
-
-                Toast.makeText(Admin_doctor.this, "No Products Available", Toast.LENGTH_LONG).show();
+                Toast.makeText(Doctor_Admin_2.this, "R No Products Available", Toast.LENGTH_LONG).show();
 
             }
 
@@ -205,6 +166,4 @@ public class Admin_doctor extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 }
-
