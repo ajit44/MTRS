@@ -16,7 +16,6 @@ public class PasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
-
         passbtn = (Button) findViewById(R.id.login_button);
 
         passbtn.setOnClickListener(new View.OnClickListener() {
