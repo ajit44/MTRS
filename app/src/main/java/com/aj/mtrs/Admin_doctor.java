@@ -37,7 +37,7 @@ public class Admin_doctor extends AppCompatActivity {
     int show = 0;
     int textlength = 0;
 
-    public static String myJSON, send_ditails;
+    public static String myJSON, send_name,send_nfc_id,send_dr_id,send_no,send_phno,send_email,send_address,send_dob,send_blood;
     private static final String TAG_RESULTS = "result";
     JSONArray peoples = null;
     public static int cnt, cnt1;
@@ -45,7 +45,7 @@ public class Admin_doctor extends AppCompatActivity {
     private ProgressDialog progress;
     final Context context = this;
     EditText inputSearch;
-    public static String nfc_id[],D_name[],mobileno[],email[],D_addr[],bloodgrp[],gender[],dob[],photoid[],d_id[],p_id[];
+    public static String nfc_id[],D_name[],mobileno[],email[],D_addr[],bloodgrp[],gender[],dob[],photoid[],d_id[],p_id[],city[];
 
 
 
@@ -59,7 +59,7 @@ public class Admin_doctor extends AppCompatActivity {
 
             try {
 
-                Toast.makeText(context, "hii", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(context, "hii", Toast.LENGTH_SHORT).show();
 
                 getData();
                 Toast.makeText(context, "2", Toast.LENGTH_SHORT).show();
@@ -69,8 +69,29 @@ public class Admin_doctor extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
 
-                        TextView textView = (TextView) v.findViewById(R.id.name);
-                        send_ditails = textView.getText().toString();
+                        TextView a = (TextView) v.findViewById(R.id.name);
+                        send_name = a.getText().toString();
+
+                        TextView b = (TextView) v.findViewById(R.id.nfc_id);
+                        send_nfc_id = b.getText().toString();
+
+                        TextView c = (TextView) v.findViewById(R.id.id);
+                        send_dr_id = c.getText().toString();
+
+                        TextView d = (TextView) v.findViewById(R.id.phno);
+                        send_no = d.getText().toString();
+
+                        TextView e = (TextView) v.findViewById(R.id.email);
+                        send_email = e.getText().toString();
+
+                        TextView f = (TextView) v.findViewById(R.id.address);
+                        send_address = f.getText().toString();
+
+                        TextView g = (TextView) v.findViewById(R.id.dob);
+                        send_dob = g.getText().toString();
+
+                        TextView h = (TextView) v.findViewById(R.id.blood);
+                        send_blood = h.getText().toString();
 
 
                         Intent s = new Intent(getApplicationContext(), ad_Dr_ditails.class);
@@ -78,7 +99,14 @@ public class Admin_doctor extends AppCompatActivity {
                     }
                 });
 
-
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                       Intent d = new Intent(getApplicationContext(),ad_Dr_ditails.class);
+                       startActivity(d);
+                    }
+                });
 
 
             }catch (Exception s){
@@ -135,7 +163,7 @@ public class Admin_doctor extends AppCompatActivity {
 
                 }catch (Exception f){
 
-                      Toast.makeText(getApplicationContext(), "error recive f on poast", Toast.LENGTH_SHORT).show();
+                      Toast.makeText(getApplicationContext(), "error recive ::"+f, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -164,7 +192,8 @@ public class Admin_doctor extends AppCompatActivity {
             dob = new String[cnt];
             photoid = new String[cnt];
             d_id = new String[cnt];
-            p_id = new String[cnt];
+
+            city= new String[cnt];
 
 
 
@@ -184,6 +213,9 @@ public class Admin_doctor extends AppCompatActivity {
                 gender[cnt1]=c.getString("gender");
                 dob[cnt1]=c.getString("dob");
                 photoid[cnt1]=c.getString("photoid");
+                d_id [cnt1]=c.getString("d_id");
+                city[cnt1]=c.getString("city");
+
 
 
                 cnt1++;
@@ -191,7 +223,7 @@ public class Admin_doctor extends AppCompatActivity {
 
 
               Toast.makeText(this, ""+peoples.length(), Toast.LENGTH_SHORT).show();
-           Lay_ad_Dr a = new Lay_ad_Dr(this,D_name,mobileno,email,D_addr,bloodgrp,gender,dob,photoid,d_id,p_id);
+           Lay_ad_Dr a = new Lay_ad_Dr(this,D_name,nfc_id,mobileno,email,D_addr,bloodgrp,gender,dob,photoid,d_id,p_id,city);
             sub_list.setAdapter(a);
 
             if(cnt==0)
@@ -205,6 +237,9 @@ public class Admin_doctor extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+
 
 }
 

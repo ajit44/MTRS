@@ -21,6 +21,7 @@ public class Lay_ad_Dr extends ArrayAdapter<String> {
     private final String fsmsnof;*/
 
     private final String[] D_name;
+    private final String[] nfc_id;
     private final String[] mobileno;
     private final String[] email;
     private final String[] D_addr;
@@ -30,8 +31,9 @@ public class Lay_ad_Dr extends ArrayAdapter<String> {
     private final String[] photoid;
     private final String[] d_id;
     private final String[] p_id;
+    private final String[] city;
 
-    public Lay_ad_Dr(Activity context, String[] D_name, String[] mobileno, String[] email, String[] D_addr, String[] bloodgrp, String[] gender, String[] dob, String[] photoid, String[] d_id, String[] p_id){
+    public Lay_ad_Dr(Activity context, String[] D_name,String[] nfc_id, String[] mobileno, String[] email, String[] D_addr, String[] bloodgrp, String[] gender, String[] dob, String[] photoid, String[] d_id, String[] p_id, String[] city){
         super(context, R.layout.lay_admin_doctor,D_name);
 
         this.context=context;
@@ -45,6 +47,7 @@ public class Lay_ad_Dr extends ArrayAdapter<String> {
         this.fsmsnof=fsmsnof;*/
 
          this.D_name=D_name;
+         this.nfc_id=nfc_id;
          this.mobileno=mobileno;
          this.email=email;
          this.D_addr=D_addr;
@@ -54,6 +57,7 @@ public class Lay_ad_Dr extends ArrayAdapter<String> {
          this.photoid=photoid;
          this.d_id=d_id;
          this.p_id=p_id;
+         this.city=city;
     }
 
 
@@ -66,14 +70,30 @@ public class Lay_ad_Dr extends ArrayAdapter<String> {
         TextView f_name=(TextView)rowView.findViewById(R.id.name);
         f_name.setText(D_name[position]);
 
-       /* TextView f_text=(TextView)rowView.findViewById(R.id.ftext);
-        f_text.setText(fmobile[position]+":"+fchat);
+        TextView f_text=(TextView)rowView.findViewById(R.id.city);
+        f_text.setText(city[position]);
 
-        TextView f_time=(TextView)rowView.findViewById(R.id.time);
-        f_time.setText(ftimef);
+        TextView f_time=(TextView)rowView.findViewById(R.id.id);
+        f_time.setText(d_id[position]);
 
-        TextView smsno=(TextView)rowView.findViewById(R.id.smsno);
-        smsno.setText(fsmsnof);*/
+        TextView nfc_ida=(TextView)rowView.findViewById(R.id.nfc_id);
+        nfc_ida.setText(nfc_id[position]);
+
+        TextView fphno=(TextView)rowView.findViewById(R.id.phno);
+        fphno.setText(mobileno[position]);
+
+        TextView femail=(TextView)rowView.findViewById(R.id.email);
+        femail.setText(email[position]);
+        TextView faddress=(TextView)rowView.findViewById(R.id.address);
+        faddress.setText(D_addr[position]);
+        TextView fdob=(TextView)rowView.findViewById(R.id.dob);
+        fdob.setText(dob[position]);
+
+        TextView fblood=(TextView)rowView.findViewById(R.id.blood);
+        fblood.setText(bloodgrp[position]);
+
+
+
 
 
 

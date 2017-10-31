@@ -14,9 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -32,6 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ad_Dr_ditails extends AppCompatActivity {
+
+    TextView doctor_name,doctor_id,doctor_phno,doctor_email,doctor_address,doctor_dob,doctor_blood;
+    EditText up_name,up_mobile,up_email,up_address,up_dob,up_blood;
+    Button up_submit;
+    public String up_name_s,up_mobile_s,up_email_s,up_address_s,up_dob_s,up_blood_s;
     LinearLayout lay;
     ImageView up_cls;
     int up_flg=0;
@@ -45,7 +53,7 @@ public class ad_Dr_ditails extends AppCompatActivity {
         setContentView(R.layout.activity_ad__dr_ditails);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+initialize_v();
 
         up_sc=(ScrollView)findViewById(R.id.up_sc);
         lay=(LinearLayout) findViewById(R.id.lay);
@@ -126,6 +134,7 @@ public class ad_Dr_ditails extends AppCompatActivity {
         }
 
         if (id == R.id.update) {
+            lay.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.INVISIBLE);
             up_flg=1;
             up_sc.setVisibility(View.VISIBLE);
@@ -219,5 +228,75 @@ public class ad_Dr_ditails extends AppCompatActivity {
         }
     }
 
+
+
+
+    public void initialize_v()
+    {
+
+        doctor_name=(TextView)findViewById(R.id.doctor_name);
+        doctor_id=(TextView)findViewById(R.id.doctor_id);
+        doctor_phno=(TextView)findViewById(R.id.doctor_phno);
+        doctor_email=(TextView)findViewById(R.id.doctor_email);
+        doctor_address=(TextView)findViewById(R.id.doctor_address);
+        doctor_dob=(TextView)findViewById(R.id.doctor_dob);
+        doctor_blood=(TextView)findViewById(R.id.doctor_blood);
+
+        doctor_name.setText(Admin_doctor.send_name);
+        doctor_id.setText(Admin_doctor.send_dr_id);
+        doctor_phno.setText(Admin_doctor.send_no);
+        doctor_email.setText(Admin_doctor.send_email);
+        doctor_address.setText(Admin_doctor.send_address);
+        doctor_dob.setText(Admin_doctor.send_dob);
+        doctor_blood.setText(Admin_doctor.send_blood);
+
+
+        up_name = (EditText)findViewById(R.id.up_name);
+        up_mobile = (EditText)findViewById(R.id.up_mobile);
+        up_email = (EditText)findViewById(R.id.up_email);
+        up_address = (EditText)findViewById(R.id.up_address);
+        up_dob = (EditText)findViewById(R.id.up_dob);
+        up_blood = (EditText)findViewById(R.id.up_blood);
+
+
+        up_submit = (Button)findViewById(R.id.up_submit);
+
+     up_submit.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+
+             up_name_s =   up_name.getText().toString();
+             up_mobile_s=       up_mobile.getText().toString();
+             up_email_s=     up_email.getText().toString();
+             up_address_s=     up_address.getText().toString();
+             up_dob_s=      up_dob.getText().toString();
+             up_blood_s=     up_blood.getText().toString();
+
+             if(up_name_s.equals("")){
+                 up_name_s=Admin_doctor.send_name;
+             }
+             if(up_mobile_s.equals("")){
+                 up_mobile_s=Admin_doctor.send_no;
+             }
+             if(up_email_s.equals("")){
+                 up_email_s=Admin_doctor.send_email;
+             }
+             if(up_address_s.equals("")){
+                 up_address_s=Admin_doctor.send_address;
+             }
+             if(up_dob_s.equals("")){
+                 up_dob_s=Admin_doctor.send_dob;
+             }
+             if(up_blood_s.equals("")){
+                 up_blood_s=Admin_doctor.send_blood;
+             }
+           //  new backgroundProcessClass().execute();
+             Snackbar.make(view, "Working chalu aahe", Snackbar.LENGTH_LONG)
+                     .setAction("Action", null).show();
+
+         }
+     });
+
+    }
 
 }
