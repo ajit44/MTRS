@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MTRS</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_admin_">Admin_Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_admin_doctor">Admin_doctor</string>
+    <string name="title_activity_ad__dr_ditails">ad_Dr_ditails</string>
+</resources>
