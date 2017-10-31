@@ -45,7 +45,7 @@ public class ad_Dr_ditails extends AppCompatActivity {
     int up_flg=0;
     FloatingActionButton fab;
     ScrollView up_sc;
-    String receivedValue,clearChat,delete;
+    String receivedValue,clearChat="no",delete;
     final Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,8 @@ initialize_v();
             builder1.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
+                    clearChat="yes";
+                    new backgroundProcessClass().execute();
                 }
             });
 
@@ -168,14 +169,21 @@ initialize_v();
 
 
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(url.Url+"send1.php");
+            HttpPost post = new HttpPost(url.Url+"doctor_update.php");
 
             //temp=params[0];
             List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
-          /*  pairs.add(new BasicNameValuePair("chat", ssmg));
-            pairs.add(new BasicNameValuePair("mob", mob));
-            pairs.add(new BasicNameValuePair("dat", sdate));
-            pairs.add(new BasicNameValuePair("clear", clearChat));*/
+
+
+            pairs.add(new BasicNameValuePair("chat", up_name_s));
+            pairs.add(new BasicNameValuePair("mob", up_mobile_s));
+            pairs.add(new BasicNameValuePair("dat", up_email_s));
+
+            pairs.add(new BasicNameValuePair("chat", up_address_s));
+            pairs.add(new BasicNameValuePair("mob", up_dob_s));
+            pairs.add(new BasicNameValuePair("dat", up_blood_s));
+            pairs.add(new BasicNameValuePair("clear", clearChat));
+            pairs.add(new BasicNameValuePair("nfc_id", Admin_doctor.send_nfc_id));
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(pairs));
@@ -290,7 +298,8 @@ initialize_v();
              if(up_blood_s.equals("")){
                  up_blood_s=Admin_doctor.send_blood;
              }
-           //  new backgroundProcessClass().execute();
+             clearChat="no";
+             new backgroundProcessClass().execute();
              Snackbar.make(view, "Working chalu aahe", Snackbar.LENGTH_LONG)
                      .setAction("Action", null).show();
 
