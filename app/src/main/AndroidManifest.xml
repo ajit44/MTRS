@@ -20,11 +20,7 @@
             android:name=".Admin_Activity"
             android:label="@string/title_activity_admin_"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Admin_doctor"
@@ -33,6 +29,19 @@
         <activity
             android:name=".ad_Dr_ditails"
             android:label="@string/title_activity_ad__dr_ditails"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".PasswordActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>

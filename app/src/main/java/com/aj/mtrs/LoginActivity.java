@@ -7,6 +7,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.NfcF;
+import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,16 +15,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class LoginActivity extends AppCompatActivity {
 
-     Button LoginB;
+    Button LoginB;
     EditText Username;
+
     IntentFilter[] intentFiltersArray;
     String[][] techListsArray;
     PendingIntent pendingIntent;
     NfcAdapter mNfcAdapter;
-    String ID,Data;
+
+    private static final String TAG_RESULTS="result";
+    public static String IDS,UsernameS,Data;
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +52,13 @@ public class LoginActivity extends AppCompatActivity {
         LoginB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),PasswordActivity.class);
-                startActivity(i);
+                if(Username.getText()==null)
+                {
+                    UsernameS=Username.getText().toString();
+                    i = new Intent(getApplicationContext(),PasswordActivity.class);
+                    startActivity(i);
+                }
+
             }
         });
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -72,30 +93,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         if (tagFromIntent != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
-            Parcelable[] rawMessages =
-                    intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            Tag myTag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            Parcelable[] rawMessages =intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            Tag myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             NdefMessage msg = (NdefMessage) rawMessages[0];
-            String data=new String(msg.getRecords()[0].getPayload());
-            Data=data.substring(3);
-            ID=bytesToHex(myTag.getId());
-
+            Data=new String(msg.getRecords()[0].getPayload());
+            IDS=bytesToHex(myTag.getId());
         }
-    }
-    private String bytesToHexString(byte[] src) {
-        StringBuilder stringBuilder = new StringBuilder("0x");
-        if (src == null || src.length <= 0) {
-            return null;
-        }
-
-        char[] buffer = new char[2];
-        for (int i = 0; i < src.length; i++) {
-            buffer[0] = Character.forDigit((src[i] >>> 4) & 0x0F, 16);
-            buffer[1] = Character.forDigit(src[i] & 0x0F, 16);
-            System.out.println(buffer);
-            stringBuilder.append(buffer);
-        }
-        return stringBuilder.toString();
     }
     final protected static char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
     public static String bytesToHex(byte[] bytes) {
@@ -109,3 +112,5 @@ public class LoginActivity extends AppCompatActivity {
         return new String(hexChars);
     }
 }
+
+
