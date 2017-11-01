@@ -8,4 +8,5 @@
     <string name="title_activity_admin_doctor">Admin_doctor</string>
     <string name="title_activity_ad__dr_ditails">ad_Dr_ditails</string>
     <string name="title_activity_doctor__admin_2">Doctor_Admin_2</string>
+    <string name="title_activity_doctor__home">Doctor_Home</string>
 </resources>

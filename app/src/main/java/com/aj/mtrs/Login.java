@@ -2,6 +2,7 @@ package com.aj.mtrs;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -34,7 +35,7 @@ public class Login extends AppCompatActivity {
     LinearLayout log_lay;
     EditText username, password;
     public String uname, pass, weburl, receivedValue;
-    String url="192.168.43.214/login.php";
+//    String url="192.168.43.214/login.php";
 
     private ProgressDialog progress;
     final Context context = this;
@@ -55,14 +56,18 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    uname = username.getText().toString();
+                   url.UsernameS= uname = username.getText().toString();
+
                     pass = password.getText().toString();
                     if (uname.equals("")) {
                         username.setError("Username Can not be blank !");
-                    } else if (password.equals("")) {
+                    } /*else if (password.equals("")) {
                         password.setError("Password Can not be blank !");
-                    } else {
-                        new backgroundProcessClass().execute();
+                    }*/ else {
+
+                        Intent s =new Intent(getApplicationContext(),PasswordActivity.class);
+                        startActivity(s);
+                       // new backgroundProcessClass().execute();
                     }
                 } catch (Exception e) {
                     Toast.makeText(context, "Error Button="+e.toString(), Toast.LENGTH_LONG).show();
@@ -98,7 +103,7 @@ public class Login extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class backgroundProcessClass extends AsyncTask<String, Void, Void> {
+    /*private class backgroundProcessClass extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -123,7 +128,7 @@ public class Login extends AppCompatActivity {
 
             // Toast.makeText(context, "indoback", Toast.LENGTH_SHORT).show();
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost("Http://" + url);
+            HttpPost post = new HttpPost("Http://" + url.Url);
 
             //temp=params[0];
             List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
@@ -152,9 +157,6 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(context, "recv : " + receivedValue, Toast.LENGTH_SHORT).show();
                 progress.dismiss();
                 if (receivedValue.contains("pass")) {
-
-
-
                     password.setText("");
                     username.setText("");
                 } else if (receivedValue.contains("fail")) {
@@ -165,14 +167,10 @@ public class Login extends AppCompatActivity {
                 } else {
                     Toast.makeText(context, "Error : " + receivedValue, Toast.LENGTH_SHORT).show();
                 }
-
                 super.onPostExecute(aVoid);
             } catch (Exception e) {
                 Toast.makeText(context, "Error Post="+e.toString(), Toast.LENGTH_LONG).show();
             }
-
         }
-
-
-    }
+    }*/
 }

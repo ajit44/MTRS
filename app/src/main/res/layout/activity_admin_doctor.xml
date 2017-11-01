@@ -39,7 +39,7 @@
                 android:layout_height="25dp" />
             <EditText
                 android:textColor="@color/colorPrimary"
-                android:hint="Float button la ditials acti. chi link dili"
+               android:hint="Search Doctor"
                 android:textColorHint="#9c9b9b"
 
                 android:id="@+id/search"

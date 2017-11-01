@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     NfcAdapter mNfcAdapter;
 
     private static final String TAG_RESULTS="result";
-    public static String IDS,UsernameS,Data;
+    public static String IDS,Data;
     Intent i;
 
     @Override
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(Username.getText()!=null)
                 {
-                    UsernameS=Username.getText().toString();
+                    url.UsernameS=Username.getText().toString();
                     i = new Intent(getApplicationContext(),PasswordActivity.class);
                     startActivity(i);
                 }
@@ -64,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
             Toast.makeText(this, "NFC is not available", Toast.LENGTH_LONG).show();
+          /*  Intent s = new Intent(getApplicationContext(),Login.class);
+            startActivity(s);*/
             finish();
             return;
         }

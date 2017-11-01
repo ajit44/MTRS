@@ -34,7 +34,7 @@ public class PasswordActivity extends AppCompatActivity {
 
     EditText Password;
     Button PasswordB;
-    String Username,NFCID,Data,Type;
+    String Username,NFCID,Data,Type,PasswordS;
     Intent i;
 
     public static String myJSON;
@@ -47,18 +47,25 @@ public class PasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
-        Password=(EditText)findViewById(R.id.Password) ;
-        PasswordB = (Button) findViewById(R.id.PasswordB);
-        NFCID=LoginActivity.IDS;
-        Username=LoginActivity.UsernameS;
-        Data=LoginActivity.Data;
 
-        PasswordB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getData();
-            }
-        });
+        try {
+            Password = (EditText) findViewById(R.id.Password);
+            PasswordB = (Button) findViewById(R.id.PasswordB);
+
+            PasswordB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PasswordS=Password.getText().toString();
+                    Toast.makeText(PasswordActivity.this, "uname : "+Username+" pas : "+PasswordS+" nfc : "+NFCID, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(PasswordActivity.this, "uname : "+Username+" pas : "+Password+" nfc : "+NFCID, Toast.LENGTH_SHORT).show();
+
+                    getData();
+                }
+            });
+
+        }catch (Exception s){
+            Toast.makeText(this, "p "+s, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void getData(){
@@ -67,35 +74,56 @@ public class PasswordActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpPost httppost= new HttpPost(weburl+"login.php");;
-                if(Username!="")
-                {
-                    List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
-                    pairs.add(new BasicNameValuePair("ID", NFCID));
-                    pairs.add(new BasicNameValuePair("Password", Password.getText().toString()));
-                    try {
-                        httppost.setEntity(new UrlEncodedFormEntity(pairs));
-                    } catch (Exception ex)
-                    {
+                HttpPost httppost= new HttpPost(weburl+"login.php");
+
+                try {
+
+
+                    if(Username != null){
+                        httppost= new HttpPost(weburl+"login.php?Username="+Username+"&Password="+PasswordS);
+                        Toast.makeText(PasswordActivity.this, "1 "+weburl+"login.php?Username="+Username+"&Password="+PasswordS, Toast.LENGTH_LONG).show();
+                    }else  if(NFCID != null){
+                        httppost= new HttpPost(weburl+"login.php?NFCID="+NFCID+"&Password="+PasswordS);
                     }
+                }catch (Exception s){
+                    Toast.makeText(PasswordActivity.this, "get 1 "+s, Toast.LENGTH_SHORT).show();
                 }
-                else if(NFCID!="")
-                {
-                    List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
-                    pairs.add(new BasicNameValuePair("Username", Username));
-                    pairs.add(new BasicNameValuePair("Password", Password.getText().toString()));
-                    try {
-                        httppost.setEntity(new UrlEncodedFormEntity(pairs));
-                    } catch (Exception ex)
-                    {
+               /* try {
+                    if (Username != "") {
+                        List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
+                        pairs.add(new BasicNameValuePair("ID", NFCID));
+                        pairs.add(new BasicNameValuePair("Password", Password.getText().toString()));
+                        try {
+                            httppost.setEntity(new UrlEncodedFormEntity(pairs));
+                        } catch (Exception ex) {
+                        }
+                    } else if (NFCID != "") {
+                        List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
+                        pairs.add(new BasicNameValuePair("Username", Username));
+                        pairs.add(new BasicNameValuePair("Password", Password.getText().toString()));
+                        try {
+                            httppost.setEntity(new UrlEncodedFormEntity(pairs));
+                        } catch (Exception ex) {
+                        }
                     }
-                }
+
 
                 // Depends on your web service
                 httppost.setHeader("Content-type", "application/json");
+                }catch (Exception s){
+                    Toast.makeText(PasswordActivity.this, "get 1 "+s, Toast.LENGTH_SHORT).show();
+                }*/
 
+
+                // Depends on your web service
+                try{
+                    httppost.setHeader("Content-type", "application/json");
+                }catch (Exception s){
+                    Toast.makeText(PasswordActivity.this, "get 1 "+s, Toast.LENGTH_SHORT).show();
+                }
                 InputStream inputStream = null;
                 String result = null;
+
                 try {
                     HttpResponse response = httpclient.execute(httppost);
                     HttpEntity entity = response.getEntity();
@@ -121,14 +149,21 @@ public class PasswordActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(String result){
-                if(result=="fail")
-                {
 
-                }
-                else
-                {
-                    myJSON=result;
-                    showList();
+                try{
+                    Toast.makeText(PasswordActivity.this, result, Toast.LENGTH_SHORT).show();
+                    if(result.contains("fail"))
+                    {
+                        Toast.makeText(PasswordActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        myJSON=result;
+                        Toast.makeText(PasswordActivity.this, "Data : "+result, Toast.LENGTH_SHORT).show();
+                           showList();
+                    }
+                }catch (Exception s){
+                    Toast.makeText(PasswordActivity.this, "get 2 "+s, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -159,17 +194,27 @@ public class PasswordActivity extends AppCompatActivity {
         switch (Type)
         {
             case "Doctor":
-                i = new Intent(getApplicationContext(),Doctor_Admin_2.class);
+                i = new Intent(getApplicationContext(),Admin_Activity.class);
                 startActivity(i);
-                        break;
+                break;
             case  "Admin":
                 i = new Intent(getApplicationContext(),PasswordActivity.class);
                 startActivity(i);
-                        break;
+                break;
             case "Patient":
                 i = new Intent(getApplicationContext(),PasswordActivity.class);
                 startActivity(i);
-                        break;
+                break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Type=null;
+        NFCID = LoginActivity.IDS;
+        Username =url.UsernameS;
+        Data = LoginActivity.Data;
+
     }
 }

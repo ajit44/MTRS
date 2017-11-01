@@ -12,8 +12,20 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.aj.mtrs.Admin_doctor"
     tools:showIn="@layout/activity_admin_doctor">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
+    <TextView
+        android:background="#2195f2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Doctor List"
+        android:gravity="center_horizontal"
+        android:textColor="#FFF"
+        android:fontFamily="monospace"
+        android:textStyle="bold"/>
     <ListView
         android:id="@+id/sub_list"
         android:layout_width="match_parent"
@@ -21,5 +33,7 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
 
+
+</LinearLayout>
 
 </RelativeLayout>

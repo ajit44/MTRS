@@ -36,52 +36,53 @@ import java.util.List;
 
 public class ad_Dr_ditails extends AppCompatActivity {
 
-    TextView doctor_name,doctor_id,doctor_phno,doctor_email,doctor_address,doctor_dob,doctor_blood;
-    EditText up_name,up_mobile,up_email,up_address,up_dob,up_blood;
+    TextView doctor_name, doctor_id, doctor_phno, doctor_email, doctor_address, doctor_dob, doctor_blood;
+    EditText up_name, up_mobile, up_email, up_address, up_dob, up_blood;
     Button up_submit;
-    public String up_name_s,up_mobile_s,up_email_s,up_address_s,up_dob_s,up_blood_s;
+    public String up_name_s, up_mobile_s, up_email_s, up_address_s, up_dob_s, up_blood_s;
     LinearLayout lay;
     ImageView up_cls;
-    int up_flg=0;
+    int up_flg = 0;
     FloatingActionButton fab;
     ScrollView up_sc;
-    String receivedValue,clearChat="no",delete;
+    String receivedValue, clearChat = "no", delete;
     final Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad__dr_ditails);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-initialize_v();
+        initialize_v();
 
-        up_sc=(ScrollView)findViewById(R.id.up_sc);
-        lay=(LinearLayout) findViewById(R.id.lay);
-        up_cls=(ImageView)findViewById(R.id.up_cls);
+        up_sc = (ScrollView) findViewById(R.id.up_sc);
+        lay = (LinearLayout) findViewById(R.id.lay);
+        up_cls = (ImageView) findViewById(R.id.up_cls);
         up_sc.setVisibility(View.INVISIBLE);
 
         up_cls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(up_flg==1){
+                if (up_flg == 1) {
                     lay.setVisibility(View.VISIBLE);
-                    up_flg=0;
+                    up_flg = 0;
                     up_sc.setVisibility(View.INVISIBLE);
                     fab.setVisibility(View.VISIBLE);
                 }
             }
         });
-         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    up_sc.setVisibility(View.VISIBLE);
+                up_sc.setVisibility(View.VISIBLE);
 
-                    //layout_anchorGravity="center_vertical|right"
+                //layout_anchorGravity="center_vertical|right"
                 lay.setVisibility(View.INVISIBLE);
-                   fab.setVisibility(View.INVISIBLE);
-                    up_flg=1;
+                fab.setVisibility(View.INVISIBLE);
+                up_flg = 1;
             }
         });
     }
@@ -103,7 +104,7 @@ initialize_v();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.delete) {
-            Toast.makeText(context, "nfc : "+Admin_doctor.send_nfc_id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "nfc : " + Admin_doctor.send_nfc_id, Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder1 = new AlertDialog.Builder(ad_Dr_ditails.this);
 
             builder1.setTitle("Confirmation");
@@ -114,7 +115,7 @@ initialize_v();
             builder1.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    clearChat="yes";
+                    clearChat = "yes";
                     new backgroundProcessClass().execute();
                 }
             });
@@ -130,14 +131,13 @@ initialize_v();
             alert11.show();
 
 
-
             return true;
         }
 
         if (id == R.id.update) {
             lay.setVisibility(View.INVISIBLE);
-        fab.setVisibility(View.INVISIBLE);
-            up_flg=1;
+            fab.setVisibility(View.INVISIBLE);
+            up_flg = 1;
             up_sc.setVisibility(View.VISIBLE);
 
             return true;
@@ -157,19 +157,18 @@ initialize_v();
             try {
 
 
-
-
             } catch (Exception e) {
                 Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
             }
 
         }
+
         @Override
         protected Void doInBackground(String... params) {
 
 
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(url.Url+"doctor_update.php");
+            HttpPost post = new HttpPost(url.Url + "doctor_update.php");
 
             //temp=params[0];
             List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
@@ -182,7 +181,7 @@ initialize_v();
             pairs.add(new BasicNameValuePair("up_address_s", up_address_s));
             pairs.add(new BasicNameValuePair("up_dob_s", up_dob_s));
             pairs.add(new BasicNameValuePair("up_blood_s", up_blood_s));
-           pairs.add(new BasicNameValuePair("clearChat", clearChat));
+            pairs.add(new BasicNameValuePair("clearChat", clearChat));
             pairs.add(new BasicNameValuePair("nfc_id", Admin_doctor.send_nfc_id));
 
             try {
@@ -201,34 +200,29 @@ initialize_v();
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             try {
 
 
-
-                clearChat="no";
+                clearChat = "no";
 
 
                 if (receivedValue.contains("pas")) {
 
 
-
-
                 } else if (receivedValue.contains("Student")) {
 
-                }else if (receivedValue.contains("fail")) {
+                } else if (receivedValue.contains("fail")) {
+
+
+                } else if (receivedValue.equals("    ")) {
 
 
                 }
-                else if (receivedValue.equals("    ")) {
 
-
-
-                }
-
-            }catch(Exception e)
-            {
+            } catch (Exception e) {
 
                 //  Toast.makeText(context, "Error_last:"+e, Toast.LENGTH_SHORT).show();
             }
@@ -237,18 +231,15 @@ initialize_v();
     }
 
 
+    public void initialize_v() {
 
-
-    public void initialize_v()
-    {
-
-        doctor_name=(TextView)findViewById(R.id.doctor_name);
-        doctor_id=(TextView)findViewById(R.id.doctor_id);
-        doctor_phno=(TextView)findViewById(R.id.doctor_phno);
-        doctor_email=(TextView)findViewById(R.id.doctor_email);
-        doctor_address=(TextView)findViewById(R.id.doctor_address);
-        doctor_dob=(TextView)findViewById(R.id.doctor_dob);
-        doctor_blood=(TextView)findViewById(R.id.doctor_blood);
+        doctor_name = (TextView) findViewById(R.id.doctor_name);
+        doctor_id = (TextView) findViewById(R.id.doctor_id);
+        doctor_phno = (TextView) findViewById(R.id.doctor_phno);
+        doctor_email = (TextView) findViewById(R.id.doctor_email);
+        doctor_address = (TextView) findViewById(R.id.doctor_address);
+        doctor_dob = (TextView) findViewById(R.id.doctor_dob);
+        doctor_blood = (TextView) findViewById(R.id.doctor_blood);
 
         doctor_name.setText(Admin_doctor.send_name);
         doctor_id.setText(Admin_doctor.send_dr_id);
@@ -259,54 +250,56 @@ initialize_v();
         doctor_blood.setText(Admin_doctor.send_blood);
 
 
-        up_name = (EditText)findViewById(R.id.up_name);
-        up_mobile = (EditText)findViewById(R.id.up_mobile);
-        up_email = (EditText)findViewById(R.id.up_email);
-        up_address = (EditText)findViewById(R.id.up_address);
-        up_dob = (EditText)findViewById(R.id.up_dob);
-        up_blood = (EditText)findViewById(R.id.up_blood);
+        up_name = (EditText) findViewById(R.id.up_name);
+        up_mobile = (EditText) findViewById(R.id.up_mobile);
+        up_email = (EditText) findViewById(R.id.up_email);
+        up_address = (EditText) findViewById(R.id.up_address);
+        up_dob = (EditText) findViewById(R.id.up_dob);
+        up_blood = (EditText) findViewById(R.id.up_blood);
 
 
-        up_submit = (Button)findViewById(R.id.up_submit);
+        up_submit = (Button) findViewById(R.id.up_submit);
 
-     up_submit.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
+        up_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-             up_name_s =   up_name.getText().toString();
-             up_mobile_s=       up_mobile.getText().toString();
-             up_email_s=     up_email.getText().toString();
-             up_address_s=     up_address.getText().toString();
-             up_dob_s=      up_dob.getText().toString();
-             up_blood_s=     up_blood.getText().toString();
+                up_name_s = up_name.getText().toString();
+                up_mobile_s = up_mobile.getText().toString();
+                up_email_s = up_email.getText().toString();
+                up_address_s = up_address.getText().toString();
+                up_dob_s = up_dob.getText().toString();
+                up_blood_s = up_blood.getText().toString();
 
-             if(up_name_s.equals("")){
-                 up_name_s=Admin_doctor.send_name;
-             }
-             if(up_mobile_s.equals("")){
-                 up_mobile_s=Admin_doctor.send_no;
-             }
-             if(up_email_s.equals("")){
-                 up_email_s=Admin_doctor.send_email;
-             }
-             if(up_address_s.equals("")){
-                 up_address_s=Admin_doctor.send_address;
-             }
-             if(up_dob_s.equals("")){
-                 up_dob_s=Admin_doctor.send_dob;
-             }
-             if(up_blood_s.equals("")){
-                 up_blood_s=Admin_doctor.send_blood;
-             }
-             clearChat="no";
-             Toast.makeText(context, "id = "+Admin_doctor.send_nfc_id+"   type "+clearChat , Toast.LENGTH_SHORT).show();
-             new backgroundProcessClass().execute();
-             Snackbar.make(view, "Working chalu aahe", Snackbar.LENGTH_LONG)
-                     .setAction("Action", null).show();
+                if (up_name_s.equals("")) {
+                    up_name_s = Admin_doctor.send_name;
+                }
+                if (up_mobile_s.equals("")) {
+                    up_mobile_s = Admin_doctor.send_no;
+                }
+                if (up_email_s.equals("")) {
+                    up_email_s = Admin_doctor.send_email;
+                }
+                if (up_address_s.equals("")) {
+                    up_address_s = Admin_doctor.send_address;
+                }
+                if (up_dob_s.equals("")) {
+                    up_dob_s = Admin_doctor.send_dob;
+                }
+                if (up_blood_s.equals("")) {
+                    up_blood_s = Admin_doctor.send_blood;
+                }
+                clearChat = "no";
+                Toast.makeText(context, "id = " + Admin_doctor.send_nfc_id + "   type " + clearChat, Toast.LENGTH_SHORT).show();
+                new backgroundProcessClass().execute();
+                Snackbar.make(view, "Working chalu aahe", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
 
-         }
-     });
+            }
+        });
 
     }
+
+
 
 }
