@@ -56,7 +56,7 @@ public class PasswordActivity extends AppCompatActivity {
         PasswordB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(PasswordActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                getData();
             }
         });
     }
