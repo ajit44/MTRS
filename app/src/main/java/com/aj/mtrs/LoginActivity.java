@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Username.getText()==null)
+                if(Username.getText()!=null)
                 {
                     UsernameS=Username.getText().toString();
                     i = new Intent(getApplicationContext(),PasswordActivity.class);
@@ -98,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
             NdefMessage msg = (NdefMessage) rawMessages[0];
             Data=new String(msg.getRecords()[0].getPayload());
             IDS=bytesToHex(myTag.getId());
+            i = new Intent(getApplicationContext(),PasswordActivity.class);
+            startActivity(i);
         }
     }
     final protected static char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
