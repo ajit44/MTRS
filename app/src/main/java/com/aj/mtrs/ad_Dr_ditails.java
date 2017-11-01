@@ -58,7 +58,7 @@ initialize_v();
         up_sc=(ScrollView)findViewById(R.id.up_sc);
         lay=(LinearLayout) findViewById(R.id.lay);
         up_cls=(ImageView)findViewById(R.id.up_cls);
-
+        up_sc.setVisibility(View.INVISIBLE);
 
         up_cls.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +103,7 @@ initialize_v();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.delete) {
-
+            Toast.makeText(context, "nfc : "+Admin_doctor.send_nfc_id, Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder1 = new AlertDialog.Builder(ad_Dr_ditails.this);
 
             builder1.setTitle("Confirmation");
@@ -175,14 +175,14 @@ initialize_v();
             List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
 
 
-            pairs.add(new BasicNameValuePair("chat", up_name_s));
-            pairs.add(new BasicNameValuePair("mob", up_mobile_s));
-            pairs.add(new BasicNameValuePair("dat", up_email_s));
+            pairs.add(new BasicNameValuePair("up_name_s", up_name_s));
+            pairs.add(new BasicNameValuePair("up_mobile_s", up_mobile_s));
+            pairs.add(new BasicNameValuePair("up_email_s", up_email_s));
 
-            pairs.add(new BasicNameValuePair("chat", up_address_s));
-            pairs.add(new BasicNameValuePair("mob", up_dob_s));
-            pairs.add(new BasicNameValuePair("dat", up_blood_s));
-            pairs.add(new BasicNameValuePair("clear", clearChat));
+            pairs.add(new BasicNameValuePair("up_address_s", up_address_s));
+            pairs.add(new BasicNameValuePair("up_dob_s", up_dob_s));
+            pairs.add(new BasicNameValuePair("up_blood_s", up_blood_s));
+           pairs.add(new BasicNameValuePair("clearChat", clearChat));
             pairs.add(new BasicNameValuePair("nfc_id", Admin_doctor.send_nfc_id));
 
             try {
@@ -299,6 +299,7 @@ initialize_v();
                  up_blood_s=Admin_doctor.send_blood;
              }
              clearChat="no";
+             Toast.makeText(context, "id = "+Admin_doctor.send_nfc_id+"   type "+clearChat , Toast.LENGTH_SHORT).show();
              new backgroundProcessClass().execute();
              Snackbar.make(view, "Working chalu aahe", Snackbar.LENGTH_LONG)
                      .setAction("Action", null).show();

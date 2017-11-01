@@ -206,7 +206,7 @@
 
     <ScrollView
         android:id="@+id/up_sc"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:overScrollMode="always"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -316,6 +316,22 @@
                 android:background="#fff"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
+                android:hint="Date Of Birth"
+                android:fontFamily="monospace"
+                android:id="@+id/up_dob"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:paddingLeft="4dp"
+                android:textColor="#2897a4"
+                android:background="#fff"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
                 android:hint="Blood group"
                 android:fontFamily="monospace"
                 android:id="@+id/up_blood"/>
@@ -335,21 +351,7 @@
                 android:fontFamily="monospace"
                 android:id="@+id/up_gender"/>
         </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:paddingLeft="4dp"
-                android:textColor="#2897a4"
-                android:background="#fff"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:hint="Date Of Birth"
-                android:fontFamily="monospace"
-                android:id="@+id/up_dob"/>
-        </android.support.design.widget.TextInputLayout>
 
 
 
